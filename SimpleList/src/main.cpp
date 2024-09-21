@@ -39,6 +39,15 @@ void print_menu(string name){
     if(choice == 4 ) {
         exit(0);
     }
+    else if(choice == 3 ){
+        delete_item();
+    }
+    else if(choice == 2 ){
+        add_item();
+    }
+    else if(choice == 1 ) {
+        print_list();
+    }
     else {
         cout << "Sorry choice hasn't been implemented.\n";
     }
@@ -61,6 +70,41 @@ void add_item(){
     print_menu(name);
 }
 
-void delete_iyem(){
+void delete_item(){
     
+    cout << "*** Delete Item ***\n";
+    cout << "Select an item index to delete\n";
+
+    if(list.size() > 0) {
+        for(int i=0; i< list.size(); i++){
+            cout << i << ": " << list[i] << "\n";
+        }
+    }
+    else {
+        cout << "No items in the list or to delete.\n";
+    }
+
+    print_menu(name);
+    
+}
+
+void print_list() {
+
+    cout << "\n\n\n\n\n\n";
+    cout << "*** Printing List ***";
+
+    for(int list_index=0; list_index < list.size(); list_index++){
+        cout << " * " << list[list_index] << "\n";
+    }
+
+    cout << "M - Menu \n";
+    char choice;
+    cin >> choice;
+
+    if( choice == "M" || choice == "m"){
+        print_menu(name);
+    }
+    else {
+        cout << "Invalid Choice. Quitting...\n";
+    }
 }
