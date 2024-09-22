@@ -2,6 +2,10 @@
 
 
 
+Resources: https://www.youtube.com/watch?v=TZANnCMJxUE&list=PLKMOdY6Bhga5ws13FNCbD0103pXEP-VFV
+
+
+
 ## Part 1- Environment Setup
 
 - Install VS Code
@@ -227,8 +231,8 @@ void print_menu(string name){
 void add_item(){
 
     cout << "\n\n\n\n\n";
-    cout << "*** Add Item ***";
-    cout << "Type in an item and press enter: ";
+    cout << "*** Add Item ***\n";
+    cout << "Type in an item and press enter: \n";
 
     string item;
     cin >> item;
@@ -241,13 +245,13 @@ void add_item(){
     print_menu(name);
 }
 
-void delete_item(){
+void delete_item() {
     
     cout << "*** Delete Item ***\n";
     cout << "Select an item index to delete\n";
 
-    if(list.size() > 0) {
-        for(int i=0; i< list.size(); i++){
+    if(list.size()) {
+        for(int i=0; i < list.size(); i++) {
             cout << i << ": " << list[i] << "\n";
         }
     }
@@ -262,9 +266,9 @@ void delete_item(){
 void print_list() {
 
     cout << "\n\n\n\n\n\n";
-    cout << "*** Printing List ***";
+    cout << "*** Printing List ***\n";
 
-    for(int list_index=0; list_index < list.size(); list_index++){
+    for(int list_index=0; list_index < list.size(); list_index++) {
         cout << " * " << list[list_index] << "\n";
     }
 
@@ -272,7 +276,7 @@ void print_list() {
     char choice;
     cin >> choice;
 
-    if( choice == "M" || choice == "m"){
+    if( choice == 'M' || choice == 'm'){
         print_menu(name);
     }
     else {
@@ -281,3 +285,10 @@ void print_list() {
 }
 ```
 
+
+
+## Part 6 - Classes and Objects
+
+
+
+01:16:43
