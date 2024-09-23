@@ -1,10 +1,13 @@
 # Master C++ programming on Linux
 
-
-
 Resources: https://www.youtube.com/watch?v=TZANnCMJxUE&list=PLKMOdY6Bhga5ws13FNCbD0103pXEP-VFV
 
+ ## Intro - Why learning C++?
 
+  * Efficient + performance: full access to RAM
+  * portability -> any system (anywhere)
+  * stable -> 40 years (System V)
+  * standardization
 
 ## Part 1- Environment Setup
 
@@ -12,10 +15,11 @@ Resources: https://www.youtube.com/watch?v=TZANnCMJxUE&list=PLKMOdY6Bhga5ws13FNC
 - Install Packages in VS Code:
   - **C/C++ IntelliSense** from Microsoft, with 70M downloads.
   - **Code Runner** from Jun Han with 29M downloads
+  - **C/C++ Makefile Project** from Adriano Markovic with 140k downloads or the Microsoft version with 5.5M downloads
 
 * Optionally install gcc compiler only if Ubuntu/Debian has not brought it up
 
-  ```
+  ```shell
   sudo apt install build-essential gdb
   gcc --version
   
@@ -27,7 +31,7 @@ Resources: https://www.youtube.com/watch?v=TZANnCMJxUE&list=PLKMOdY6Bhga5ws13FNC
 
 ## Part 2- Hello World app
 
- - ```c++
+ - ```cpp
    #include <iostream>
    
    int main(){
@@ -47,7 +51,7 @@ Resources: https://www.youtube.com/watch?v=TZANnCMJxUE&list=PLKMOdY6Bhga5ws13FNC
   * manage dependencies
   * compile/build multiple sources
   * keeps track of compilations
-* install **C/C++ Makefile** from Adriano Markovic
+* 
 
 
 
@@ -59,24 +63,15 @@ Resources: https://www.youtube.com/watch?v=TZANnCMJxUE&list=PLKMOdY6Bhga5ws13FNC
 
 * from terminal 
 
-  ```
+  ```shell
   make
   ```
 
 * ### Run the app
 
-  ```
+  ```shell
   SimpleList
   ```
-
-  
-
-* ### Why learning C++?
-
-  * Efficient + performance: full access to RAM
-  * portability -> any system (anywhere)
-  * stable -> 40 years (System V)
-  * standardization
 
 
 
@@ -101,7 +96,7 @@ Resources: https://www.youtube.com/watch?v=TZANnCMJxUE&list=PLKMOdY6Bhga5ws13FNC
 
 The cpp is as below so far:
 
-```c++
+```cpp
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -172,7 +167,7 @@ void add_item(){
 
 Here you are:
 
-```c++
+```cpp
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -293,7 +288,7 @@ void print_list() {
 
 Fix the issue of warning by type cast, fir instance: at line 96, add `int()` to `list.size()` as:
 
-```
+```cpp
 for(int list_index=0; list_index < int(list.size()); list_index++){
 	cout << " * " << list[list_index] << "\n";
 }
@@ -301,7 +296,7 @@ for(int list_index=0; list_index < int(list.size()); list_index++){
 
 But type casting may lose the precision, then a better way is to `unsign` the list_index as below:
 
-```
+```cpp
 for(unsigned int list_index=0; list_index < list.size(); list_index++){
 	cout << " * " << list[list_index] << "\n";
 }
@@ -315,7 +310,7 @@ Add a header file in `src/include/` folder: `src/include/list.h`
 
 `src/include/list.h` file:
 
-```
+```cpp
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -348,7 +343,7 @@ class List {
 
 `src/list.cpp` file:
 
-```
+```cpp
 #include "include/list.h"
 
 void List::print_menu() {
@@ -441,7 +436,7 @@ void List::print_list() {
 
 `src/main.cpp` file:
 
-```
+```cpp
 #include "include/list.h"
 
 int main(int arg_count, char *args[]){
