@@ -302,8 +302,6 @@ for(unsigned int list_index=0; list_index < list.size(); list_index++){
 }
 ```
 
-
-
 ### Classes and Objects
 
 Add a header file in `src/include/` folder: `src/include/list.h`
@@ -459,6 +457,78 @@ int main(int arg_count, char *args[]){
 
 ## Part 7- Source Control with Git
 
+Plus update the delete_item function:
+```cpp
+void List::delete_item() {
+    
+    cout << "*** Delete Item ***\n";
+    cout << "Select an item index to delete: \n";
+
+    if(list.size()) {
+        for(unsigned int i=0; i < list.size(); i++) {
+            cout << i << ": " << list[i] << "\n";
+        }
+        int choiceNum;
+        cin >> choiceNum;
+        list.erase(list.begin()+choiceNum);
+    }
+    else {
+        cout << "No items in the list or to delete.\n";
+    }
+
+    print_menu();
+    
+}
+```
+
+## Part 8 - Making a Database 01:49
+Please check the database.h and database.cpp, plus main.cpp
+```cpp
+void Database::write() {
+    ofstream db;
+    db.open("db/lists.sl");
+
+    if(db.is_open()) {
+        db << "1\n2\n3\n4\n5\n";
+    }
+    else {
+        cout << "Cannot open file for writing.\n";
+    }
+
+    db.close();
+}
+```
+
+## Part 9 - Write and read the databse 1:59
+resume to function Database.read():
+```cpp
+void Database::read(){
+    string line;
+    ifstream db;
+    db.open("db/lists.sl");
+
+    if(db.is_open()) {
+        while(getline(db,line,'\n')) {
+            cout << line << "\n";
+        }
+    }
+    else {
+        cout << "Cannot open file for reading.\n";
+    }
+
+    db.close();
+}
+```
+### Difference of double quote and single quote
+
+- double quote "" is for string, or array of characters
+- single quote '' is for char, or single character
+
+then `\n` is a sinle char and should associate with single quote.
+
+After testing okay with writing and reading the numbers, also try write the simpleList.list to the database.
+
+## Part 10 - User Management in Database - 02:11
 
 
-1:41:20
+## To be Continued
