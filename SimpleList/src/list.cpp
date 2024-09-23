@@ -87,3 +87,13 @@ void List::print_list() {
         cout << "Invalid Choice. Quitting...\n";
     }
 }
+
+void List::find_userList() {
+    bool userFind = false;
+
+    cout << "\n\n\n\n\n\n";
+    cout << "*** Welcome " << name << " ***\n";
+
+
+
+}
