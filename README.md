@@ -532,6 +532,306 @@ After testing okay with writing and reading the numbers, also try write the simp
 
 
 ## Part 11 - Fully Working Program - 02:35
+Here are the codes so far:
 
+- main.cpp:
+```cpp
+#include "include/list.h"
+#include "include/database.h"
 
-## To be Continued - 02:43:58
+int main(int arg_count, char *args[]){
+
+    List simpleList;
+    Database data;
+
+    if(arg_count > 1) {
+        simpleList.name = string(args[1]);
+        simpleList.mainList = data.read();
+        simpleList.find_userList();
+        simpleList.print_menu();
+        data.write(simpleList.mainList);
+    }
+    else {
+        cout << "Username not supplied.. exiting the program" << endl;
+    }
+
+    return 0;
+
+}
+```
+
+- database.cpp:
+```cpp
+#include "include/database.h"
+
+void Database::write(vector<vector<string>> mainList) {
+
+    ofstream db;
+    db.open("db/lists.sl");
+
+    if(db.is_open()) {
+        for( unsigned int user_index=0; user_index < mainList.size(); user_index++ ) {
+            for( unsigned int list_index=0; list_index < mainList[user_index].size(); list_index++ ) {
+                if( list_index == 0 ) {
+                    db << "#" << mainList[user_index][list_index] << "\n";
+                }
+                else {
+                    db << mainList[user_index][list_index] << "\n";
+                }
+            }
+            db << "%" << "\n";
+        }
+    }
+    else {
+        cout << "Cannot open file for writing.\n";
+    }
+
+    db.close();
+
+}
+
+vector<vector<string>> Database::read(){
+    string line;
+    ifstream db;
+
+    vector<string> userList;
+
+    db.open("db/lists.sl");
+
+    if(db.is_open()) {
+        while(getline(db,line,'\n')) {
+            if(line.front() == '#') {
+                cout << "Found a hashtag: " << line << "\n";
+                line.erase(line.begin());
+                userList.push_back(line);
+
+            }
+            else if(line.front() == '%') {
+                cout << "Found a percentage: " << line << "/n";
+                mainList.push_back(userList);
+                userList.clear();
+            }
+            else {
+                cout << "Found an item: " << line << "\n";
+                userList.push_back(line);
+
+            }
+        }
+    }
+    else {
+        cout << "Cannot open file for reading.\n";
+    }
+
+    db.close();
+
+    return mainList;
+}
+```
+
+- list.cpp:
+```cpp
+#include "include/list.h"
+
+void List::print_menu() {
+    int choice;
+
+    cout << "***************\n";
+    cout << " 1 - Print list.\n";
+    cout << " 2 - Add to list.\n";
+    cout << " 3 - Delete from list.\n";
+    cout << " 4 - Save list.\n";
+    cout << " 5 - Quit.\n";
+    cout << " Enter your choice and press return/enter.\n";
+
+    cin >> choice;
+
+    if(choice == 5 ) {
+        return;
+    }
+    else if(choice == 4 ) {
+        save_list();
+    }
+    else if(choice == 3 ){
+        delete_item();
+    }
+    else if(choice == 2 ){
+        add_item();
+    }
+    else if(choice == 1 ) {
+        print_list();
+    }
+    else {
+        cout << "Sorry choice hasn't been implemented.\n";
+    }
+}
+
+void List::add_item(){
+
+    cout << "\n\n\n\n\n";
+    cout << "*** Add Item ***\n";
+    cout << "Type in an item and press enter: \n";
+
+    string item;
+    cin >> item;
+
+    list.push_back(item);
+
+    cout << "Successfully added an item to the list \n\n\n\n";
+    cin.clear();
+
+    print_menu();
+}
+
+void List::delete_item() {
+    
+    cout << "*** Delete Item ***\n";
+    cout << "Select an item index to delete: \n";
+
+    if(list.size()) {
+        for(unsigned int i=0; i < list.size(); i++) {
+            cout << i << ": " << list[i] << "\n";
+        }
+        int choiceNum;
+        cin >> choiceNum;
+        list.erase(list.begin()+choiceNum);
+    }
+    else {
+        cout << "No items in the list or to delete.\n";
+    }
+
+    print_menu();
+    
+}
+
+void List::print_list() {
+
+    cout << "\n\n\n\n\n\n";
+    cout << "*** Printing List ***\n";
+
+    for(unsigned int list_index=0; list_index < list.size(); list_index++) {
+        cout << " * " << list[list_index] << "\n";
+    }
+
+    cout << "M - Menu \n";
+    char choice;
+    cin >> choice;
+
+    if( choice == 'M' || choice == 'm'){
+        print_menu();
+    }
+    else {
+        cout << "Invalid Choice. Quitting...\n";
+    }
+}
+
+bool List::find_userList() {
+    bool userFound = false;
+
+    cout << "\n\n\n\n\n\n";
+    cout << "*** Welcome " << name << " ***\n";
+
+    for(unsigned int user_index=0; user_index < mainList.size(); user_index++ ) {
+        cout << mainList[user_index][0] << "\n";
+        if(mainList[user_index][0] == name) {
+            cout << "User has been found: " << mainList[user_index][0] << "\n";
+            list = mainList[user_index];
+            currentUserIndex = user_index;
+            userFound = true;
+            break;
+        }
+    }
+
+    if(userFound == false) {
+        list.push_back(name);
+        mainList.push_back(list);
+        currentUserIndex = mainList.size() - 1;
+    }
+
+    return userFound;
+}
+
+void List::save_list() {
+    cout << "Saving the list...\n";
+    mainList[currentUserIndex] = list;
+    print_menu();
+}
+```
+
+- include/database.h
+```cpp
+#include <iostream>
+#include <vector>
+#include <fstream>
+
+using namespace std;
+
+class Database {
+    private:
+
+    protected:
+
+    public:
+
+        Database() {
+            //constructor
+        }
+        ~Database() {
+            //destructor
+        }
+
+        vector<vector<string>> mainList;
+        string name;
+
+        void write(vector<vector<string>> mainList);
+        vector<vector<string>> read();
+};
+```
+
+- include/list.h
+```cpp
+#include <iostream>
+#include <vector>
+#include <fstream>
+
+using namespace std;
+
+class Database {
+    private:
+
+    protected:
+
+    public:
+
+        Database() {
+            //constructor
+        }
+        ~Database() {
+            //destructor
+        }
+
+        vector<vector<string>> mainList;
+        string name;
+
+        void write(vector<vector<string>> mainList);
+        vector<vector<string>> read();
+};
+```
+
+- db/list.sl
+```cpp
+#Marcus
+Item1
+Item2
+Item3
+Item4
+%
+#Jennifer
+Item4
+Item5
+Item6
+%
+
+```
+
+## part 12 - Cleaning up - 02:47
+## To be Continued - 02:50
