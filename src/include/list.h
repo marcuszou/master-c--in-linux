@@ -1,5 +1,5 @@
-#include <iostream>
-#include <vector>
+#include "database.h"
+
 using namespace std;
 
 class List {
@@ -16,6 +16,7 @@ class List {
             //destructor
         }
 
+        Database data;
         vector<vector<string>> mainList;
         vector<string> list;
         string name;

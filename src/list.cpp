@@ -121,5 +121,6 @@ bool List::find_userList() {
 void List::save_list() {
     cout << "Saving the list...\n";
     mainList[currentUserIndex] = list;
+    data.write(mainList);
     print_menu();
 }
